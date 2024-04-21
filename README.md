@@ -19,7 +19,7 @@ We commit new or modified content to the database while keeping the previous con
 
 SUGGESTED LIBRARIES 
 
-Axios 
+Axios  
 JSDOM 
 
 WEBSITE ( refer to the included png files for content to scrape )
@@ -27,3 +27,7 @@ WEBSITE ( refer to the included png files for content to scrape )
 Gather Links on https://www.ird.gov.hk/eng/ppr/arc.htm
 
 Example of Link to be scraped https://www.ird.gov.hk/eng/ppr/advance13.htm
+
+# how to run
+Run `npx tsc` to compile .ts files  
+Run `node dist/index.js` to run code
