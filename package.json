@@ -1,0 +1,27 @@
+{
+  "name": "scrapy-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jsdom": "^21.1.6",
+    "axios": "^1.6.8",
+    "jquery": "^3.7.1",
+    "jsdom": "^24.0.0",
+    "module-alias": "^2.2.3",
+    "mongoose": "^8.2.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.29",
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  },
+  "_moduleAliases": {
+    "@": "./dist"
+  }
+}
