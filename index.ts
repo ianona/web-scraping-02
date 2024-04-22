@@ -4,9 +4,12 @@ import {
   findWebsiteByUrl,
   getAllWebsites,
   IWebsite,
+  updateWebsiteById,
 } from "./models/website.model";
 import { ARIWebsite } from "./websites/ari";
 import db from "./models";
+import { IJob } from "./models/job.model";
+import { IContent } from "./models/content.model";
 /*
 
 DESCRIPTION 
@@ -44,7 +47,7 @@ export interface WebsiteEntry {
   url: string;
   name: string;
   description: string;
-  scrapingFn: (w: IWebsite) => void;
+  startJob: (w: IWebsite) => Promise<{ job: IJob; content: IContent[] }>;
 }
 
 const WEBSITES: WebsiteEntry[] = [ARIWebsite];
@@ -71,7 +74,11 @@ async function main(): Promise<void> {
       });
     }
 
-    website.scrapingFn(websiteObj);
+    const { job, content } = await website.startJob(websiteObj);
+    updateWebsiteById(websiteObj._id, {
+      jobs: [...websiteObj.jobs, job._id],
+      content: content.map((wc) => wc._id),
+    });
     console.log(`[Scraping] Done: ${websiteObj.url}`);
   }
 }
@@ -79,7 +86,5 @@ async function main(): Promise<void> {
 (async () => {
   await db.mongoose.connect(db.url);
   console.log("[MongoDB] Connection Success");
-  const allWebsites = await getAllWebsites();
-  console.log("ALL WEBSITES", allWebsites);
   main();
 })();

@@ -14,7 +14,6 @@ import {
 import { createJob, updateJobById } from "@/models/job.model";
 import { IWebsite, updateWebsiteById } from "@/models/website.model";
 import { WebsiteEntry } from "..";
-const jquery = require("jquery");
 
 interface CaseSummary {
   number: string | null;
@@ -99,7 +98,6 @@ function buildLinksFromARIGroups(
 
 const PAGE_TITLE_SELECTOR = "div.content-title-div";
 const PAGE_CONTENT_SELECTOR = "div.content-div";
-// const PAGE_DATE_SELECTOR = "input#lastUpdatedDate";
 const PAGE_DATE_SELECTOR = "input#lastUpdatedDate";
 
 enum Status {
@@ -126,10 +124,6 @@ async function scrapeLinks(
       },
     });
 
-    // for debugging
-    // if (link !== "https://www.ird.gov.hk/eng/ppr/advance16.htm") {
-    //   continue;
-    // }
     try {
       const dom = await JSDOM.fromURL(link, {
         runScripts: "dangerously",
@@ -268,13 +262,6 @@ async function scrapeARI(websiteObj: IWebsite) {
       console.log("[Scraping] Pages Scrape Success");
       websiteContent = contents;
 
-      // Output valid URLs
-      // console.log("OUTPUT");
-      // console.log(
-      //   ariGroups.forEach((ar) => console.log("arcases", ar.cases))
-      // );
-      // console.log(links);
-
       updateJobById(job._id, {
         status: Status.Finished,
         endTime: new Date(),
@@ -296,12 +283,7 @@ async function scrapeARI(websiteObj: IWebsite) {
       },
     });
   }
-
-  // Add job to website
-  updateWebsiteById(websiteObj._id, {
-    jobs: [...websiteObj.jobs, job._id],
-    content: websiteContent.map((wc) => wc._id),
-  });
+  return { job, content: websiteContent };
 }
 
 export const ARIWebsite: WebsiteEntry = {
@@ -309,5 +291,5 @@ export const ARIWebsite: WebsiteEntry = {
   description:
     "List of tax rulings regarding the application of tax laws to specific transactions or situations by the Inland Revenue Department of Hong Kong",
   url: "https://www.ird.gov.hk/eng/ppr/arc.htm",
-  scrapingFn: scrapeARI,
+  startJob: scrapeARI,
 };

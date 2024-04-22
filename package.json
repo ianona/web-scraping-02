@@ -11,13 +11,11 @@
   "dependencies": {
     "@types/jsdom": "^21.1.6",
     "axios": "^1.6.8",
-    "jquery": "^3.7.1",
     "jsdom": "^24.0.0",
     "module-alias": "^2.2.3",
     "mongoose": "^8.2.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.29",
     "@types/node": "^20.12.7",
     "typescript": "^5.4.5"
   },

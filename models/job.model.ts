@@ -2,7 +2,7 @@ import { Document, model, Model, Schema } from "mongoose";
 import { Types } from "mongoose";
 import { generateCreate, generateUpdateById } from "./utils";
 
-interface IJob extends Document {
+export interface IJob extends Document {
   website: Types.ObjectId;
   startTime: Date;
   endTime?: Date;
