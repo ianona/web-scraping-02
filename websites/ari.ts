@@ -12,7 +12,7 @@ import {
   isNotNullOrUndefined,
 } from "@/models/utils";
 import { createJob, updateJobById } from "@/models/job.model";
-import { IWebsite, updateWebsiteById } from "@/models/website.model";
+import { IWebsite } from "@/models/website.model";
 import { WebsiteEntry } from "..";
 
 interface CaseSummary {
@@ -41,30 +41,37 @@ function parseIndex(cell: HTMLTableCellElement): string[] {
     : [];
 }
 
+const GROUP_SELECTOR = "div.toggle_div";
+const GROUP_TITLE_SELECTOR = "div.faq_title";
+const TABLE_SELECTOR = "table";
+const ROW_SELECTOR = "tr";
+const CELL_SELECTOR = "td";
+const ANCHOR_SELECTOR = "a";
+
 function getAdvanceRulingGroups(dom: JSDOM): AdvancedRulingFaqGroup[] {
   const document: Document = dom.window.document;
   const toggleDivs: NodeListOf<HTMLDivElement> =
-    document.querySelectorAll("div.toggle_div");
+    document.querySelectorAll(GROUP_SELECTOR);
 
   // Iterate over the NodeList
   const ariGroups = Array.from(toggleDivs).map((div) => {
     const parentNode = div.parentNode;
     // Get the text content of child div with class faq_title
     const faqTitle =
-      div.querySelector("div.faq_title")?.textContent?.trim() ?? "";
+      div.querySelector(GROUP_TITLE_SELECTOR)?.textContent?.trim() ?? "";
 
     // Get the table element if found inside the parent div
-    const table = parentNode?.querySelector("table");
+    const table = parentNode?.querySelector(TABLE_SELECTOR);
     if (table) {
-      const rows = table.querySelectorAll("tr");
+      const rows = table.querySelectorAll(ROW_SELECTOR);
       const cases: CaseSummary[] = Array.from(rows)
         .slice(1)
         .map((row) => {
-          const cells = Array.from(row.querySelectorAll("td"));
+          const cells = Array.from(row.querySelectorAll(CELL_SELECTOR));
           if (cells.length !== 3) {
             throw Error("Expecting 3 cells per row of data");
           }
-          const caseUrl = cells[0].querySelector("a")?.href ?? null;
+          const caseUrl = cells[0].querySelector(ANCHOR_SELECTOR)?.href ?? null;
           // optimistic approach
           return {
             number: cells[0].textContent ?? null,

@@ -7,21 +7,6 @@ import {
   generateUpdateById,
 } from "./utils";
 
-// const websiteSchema = new Schema({
-//   name: {
-//     type: String,
-//     unique: true,
-//   },
-//   url: String,
-//   description: String,
-//   jobs: [{ type: Schema.Types.ObjectId, ref: "Job" }],
-//   content: [{ type: Schema.Types.ObjectId, ref: "Content" }],
-// });
-
-// const Website = model("Website", websiteSchema);
-
-// module.exports = { Website, websiteSchema };
-
 export interface IWebsite extends Document {
   name: string;
   url: string;

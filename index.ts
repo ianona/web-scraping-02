@@ -2,7 +2,6 @@ import "module-alias/register";
 import {
   createWebsite,
   findWebsiteByUrl,
-  getAllWebsites,
   IWebsite,
   updateWebsiteById,
 } from "./models/website.model";
@@ -27,7 +26,8 @@ Then we create a Job entry, this is where we store information about the links g
 We can refer to these Job objects for historical or troubleshooting reasons. 
 
 Content objects are then created with the scraped page content,  we checksum the content and compare against existing content entries. 
-We commit new or modified content to the database while keeping the previous content in database.  Page objects store a reference to the content, not the actual content itself.   
+We commit new or modified content to the database while keeping the previous content in database.  
+Page objects store a reference to the content, not the actual content itself.   
 
 SUGGESTED LIBRARIES 
 
